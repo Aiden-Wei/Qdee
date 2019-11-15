@@ -1447,63 +1447,34 @@ namespace qdee {
         let echoPin: DigitalPin = DigitalPin.P2;
         let distance: number = 0;
         let d: number = 0;
-        if (versionNum == -1)//没有读取到版本号
-        {
-            switch (port) {
-                case ultrasonicPort.port1:
-                    trigPin = DigitalPin.P1;
-                    break;
-                case ultrasonicPort.port2:
-                    trigPin = DigitalPin.P13;
-                    break;
-            }
-            pins.setPull(trigPin, PinPullMode.PullNone);
-            pins.digitalWritePin(trigPin, 0);
-            control.waitMicros(2);
-            pins.digitalWritePin(trigPin, 1);
-            control.waitMicros(10);
-            pins.digitalWritePin(trigPin, 0);
+	    switch (port) {
+		case ultrasonicPort.port1:
+		    trigPin = DigitalPin.P1;
+		    echoPin = DigitalPin.P2;
+		    break;
+		case ultrasonicPort.port2:
+		    trigPin = DigitalPin.P13;
+		    echoPin = DigitalPin.P14;
+		    break;
+	    }
+	    pins.setPull(echoPin, PinPullMode.PullNone);
+	    pins.setPull(trigPin, PinPullMode.PullNone);
 
-            d = pins.pulseIn(trigPin, PulseValue.High, 15000);
-            distance = d;
-            // filter timeout spikes
-            if (distance == 0 || distance >= 13920) {
-                distance = distanceBak;
-            }
-            else
-                distanceBak = d;
-
-        }
-        else {
-            switch (port) {
-                case ultrasonicPort.port1:
-                    trigPin = DigitalPin.P1;
-                    echoPin = DigitalPin.P2;
-                    break;
-                case ultrasonicPort.port2:
-                    trigPin = DigitalPin.P13;
-                    echoPin = DigitalPin.P14;
-                    break;
-            }
-            pins.setPull(echoPin, PinPullMode.PullNone);
-            pins.setPull(trigPin, PinPullMode.PullNone);
-
-            // send pulse
-            pins.digitalWritePin(trigPin, 0);
-            control.waitMicros(2);
-            pins.digitalWritePin(trigPin, 1);
-            control.waitMicros(10);
-            pins.digitalWritePin(trigPin, 0);
-            // read pulse
-            d = pins.pulseIn(echoPin, PulseValue.High, 15000);
-            distance = d;
-            // filter timeout spikes
-            if (distance == 0 || distance >= 13920) {
-                distance = distanceBak;
-            }
-            else
-                distanceBak = d;
-        }
+	    // send pulse
+	    pins.digitalWritePin(trigPin, 0);
+	    control.waitMicros(2);
+	    pins.digitalWritePin(trigPin, 1);
+	    control.waitMicros(10);
+	    pins.digitalWritePin(trigPin, 0);
+	    // read pulse
+	    d = pins.pulseIn(echoPin, PulseValue.High, 15000);
+	    distance = d;
+	    // filter timeout spikes
+	    if (distance == 0 || distance >= 13920) {
+		distance = distanceBak;
+	    }
+	    else
+		distanceBak = d;
 
         return Math.round(distance * 10 / 6 / 58);
     }
