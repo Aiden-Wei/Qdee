@@ -637,7 +637,6 @@ namespace qdee {
     //% weight=93 blockId=qdee_actionRunover block="Action run over"
     //% subcategory=Servo
     export function qdee_actionRunover(): boolean {
-        if (actiongroup_finished == ) {
            return actiongroup_finished;
     }
 	
