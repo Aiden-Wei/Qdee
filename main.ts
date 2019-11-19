@@ -384,6 +384,7 @@ namespace qdee {
     let cntIr = 0;
     let adress = 0;
     let sendFlag = false;
+    let actiongroup_finished = true;
     /**
     * Get the handle command.
     */
@@ -424,6 +425,9 @@ namespace qdee {
                 PB0 = checkADPortValue(arg3Int);
                 PB1 = checkADPortValue(arg4Int);
             }
+	    if (cmd.charAt(0).compare("A") == 0 && cmd.length == 4) {
+	        actiongroup_finished = true;  
+	    }
             else if (cmd.charAt(0).compare("B") == 0 && cmd.length == 16)
             {
                 let arg1Int: number = strToNumber(cmd.substr(1, 2));
@@ -626,7 +630,17 @@ namespace qdee {
         buf[9] = (position >> 8) & 0xff;
         serial.writeBuffer(buf);
     }
-
+	
+    /**
+     * Wait for Actiongroup Finishing
+     */
+    //% weight=93 blockId=qdee_actionRunover block="Action run over"
+    //% subcategory=Servo
+    export function qdee_actionRunover(): boolean {
+        if (actiongroup_finished == ) {
+           return actiongroup_finished;
+    }
+	
     /**
     * Set the number of the servo.
     */
