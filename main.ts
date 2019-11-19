@@ -384,7 +384,7 @@ namespace qdee {
     let cntIr = 0;
     let adress = 0;
     let sendFlag = false;
-    let actiongroup_finished = true;
+    let actiongroup_finished = false;
     /**
     * Get the handle command.
     */
