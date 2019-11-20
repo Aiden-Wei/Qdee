@@ -425,7 +425,7 @@ namespace qdee {
                 PB0 = checkADPortValue(arg3Int);
                 PB1 = checkADPortValue(arg4Int);
             }
-	    if (cmd.charAt(0).compare("A") == 0 && cmd.length == 4) {
+	    if (cmd.charAt(0).compare("A") == 0 && cmd.length == 3) {
 	        actiongroup_finished = true;  
 	    }
             else if (cmd.charAt(0).compare("B") == 0 && cmd.length == 16)
