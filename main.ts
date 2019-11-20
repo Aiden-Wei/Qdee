@@ -601,6 +601,27 @@ namespace qdee {
     }
 
     /**
+    * Set the servo controller to run a actiongroup
+    * @param times Running times. eg: 1
+    */
+    //% weight=94 blockId=qdee_runActionGroup block="Run ActionGroup|index %index|times %times"
+    //% subcategory=Servo
+    export function qdee_runActionGroup(index: number, times: number = 1) {
+
+        let buf = pins.createBuffer(7);
+        buf[0] = 0x55;
+        buf[1] = 0x55;
+        buf[2] = 0x05;
+        buf[3] = 0x06;//cmd type CMD_ACTION_GROUP_RUN
+        buf[4] = index & 0xff;
+        buf[5] = times & 0xff;
+        buf[6] = (times >> 8) & 0xff;
+
+        actiongroup_finished = false;
+        serial.writeBuffer(buf);
+    }	
+	
+    /**
     * Set the angle of bus servo 1 to 8, range of -120~120 degree
     */
     //% weight=96 blockId=qdee_setBusServo block="Set bus servo|port %port|index %index|angle(-120~120) %angle|duration(ms) %duration"
